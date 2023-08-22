@@ -16,8 +16,8 @@ const PrivateRoute = ({
     children,
 }) => {
     const [cookies] = useCookies(['session']);
-
-    if (!cookies.session) {
+    const token = localStorage.getItem("token")
+    if (!cookies.session || !token) {
         return <Navigate to={redirectPath} replace />;
     }
 

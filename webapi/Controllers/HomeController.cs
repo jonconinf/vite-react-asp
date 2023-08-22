@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
-using System.Linq;
 using webapi.Models;
 
 namespace webapi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class HomeController : ControllerBase

@@ -2,15 +2,27 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const history = useNavigate();
+    const navigate = useNavigate();
 
-    const handleRegister = () => {
-        // In here you can star the registering process. E.g: make a network request to create the user in the system.
-        // After a successful register, redirect to /login
-        history.push('/login');
+    const handleRegister = async () => {
+        const body = {
+            "username": username, "email": email, "password": password
+        }
+        const response = await fetch(`/authenticate/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+        const data = await response.json();
+        alert(data.message);
+        if (response.status === 201) {
+            navigate('/login');
+        }
     };
 
     // TODO: add styles
@@ -19,11 +31,11 @@ const Register = () => {
             <h1>Register</h1>
             <form>
                 <div>
-                    <label>Name:</label>
+                    <label>Username:</label>
                     <input
                         type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div>

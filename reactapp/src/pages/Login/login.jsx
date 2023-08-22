@@ -3,26 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
 const Login = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const [, setCookie] = useCookies(['session']);
 
-    const handleLogin = () => {
-        // Verify credentials. E.g: do a network request
-        // In this case we are hardcoding the credentials.
-        if (email === 'email@example.com' && password === 'password') {
-            // Store the session cookie in the browser.
-            //
-            // It is not recomended to store sessions cookies or any other sensitive information in the `localStorage`. 
-            // It is possible to do Cross-Site-Scripting (XSS) to the `localStorage`.
-            // Another option would be to store the session in the `sessionStorage`. This storage is removed when the browser is closed.
-            // `Cookies` are not accesible via JS.
-            setCookie('session', 'email@example.com', { path: '/' });
-            // Navigate to articles 
+    const handleLogin = async () => {
+        const body = {
+            "username": username, "password": password
+        }
+        const response = await fetch(`/authenticate/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+        const data = await response.json();
+        if (response.status === 200) {
+            setCookie('session', 'test', { path: '/' });
+            localStorage.setItem("token", data.token)
             navigate('/articles');
         } else {
-            // Show an alert if authentication fails
             alert('Wrong credentials.');
         }
     };
@@ -33,11 +35,11 @@ const Login = () => {
             <h1>Login</h1>
             <form>
                 <div>
-                    <label>Email:</label>
+                    <label>Username:</label>
                     <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
                 <div>

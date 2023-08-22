@@ -12,8 +12,8 @@ const Articles = () => {
     }, [])
 
     const populateArticleData = async () => {
-
-        const response = await fetch('/home');
+        const token = localStorage.getItem("token")
+        const response = await fetch('/home', { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await response.json();
         setArticles(data)
         setLoading(false)
