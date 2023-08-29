@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
 using webapi.Models;
+using System.Diagnostics;
+using MySql.Data.MySqlClient;
+using System.Globalization;
 
 namespace webapi.Controllers
 {
@@ -16,21 +21,18 @@ namespace webapi.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _articles = new List<Article>
-            {
-                new Article { Title = "Inte klart med ersättare för Ribbenvik", Summary = "▸ Regeringen och SD har ännu inte hittat någon ersättare för Migrationsverkets avgående generaldirektör Mikael Ribbenvik.", Link = "https://www.aftonbladet.se/nyheter/a/8JWWL2/inte-klart-med-ersattare-for-ribbenvik", Published = DateTime.Now.AddDays(-1), Topic = new List<string>{ "SamhalleKonflikter" } },
-                new Article { Title = "Drogs in i inhägnad – dödades av 40 krokodiler", Summary = "▸ En 72-årig man har dödats av omkring 40 krokodiler sedan han dragits in i en inhägnad på familjens reptilfarm, enligt…", Link = "https://www.aftonbladet.se/nyheter/a/bgWW6e/drogs-in-i-inhagnad-dodades-av-40-krokodiler", Published = DateTime.Now.AddDays(-2), Topic = new List<string>{ "Ekonomi" } },
-                new Article { Title = "Regionpolitiker: Mer stöd från staten behövs", Summary = "▸ Regeringen behöver skjuta till pengar för att välfärden inte ska drabbas drastiskt.", Link = "https://www.aftonbladet.se/nyheter/a/y6XXyR/regionpolitiker-mer-stod-fran-staten-behovs", Published = DateTime.Now.AddDays(-1), Topic = new List<string>{ "Politik" } },
-                new Article { Title = "Två avlidna hittade i bostad i Sandviken", Summary = "▸ En man och en kvinna har hittats avlidna i en bostad i Sandviken, skriver polisen på sin hemsida. Dödsorsaken är oklar.", Link = "https://www.aftonbladet.se/nyheter/a/dwPPP1/tva-avlidna-hittade-i-bostad-i-sandviken", Published = DateTime.Now.AddDays(-3), Topic = new List<string>{ "Miljo" } }
-            };
         }
 
         [HttpGet]
-        public IActionResult Index(string topic = "", string sortBy = "")
+        public IActionResult Index(string topic = "All", string sortBy = "newest")
         {
-            var articles = _articles;
+            // Get all articles from the database
+            List<Article> articles = GetArticlesFromDatabase();
 
-            if (!string.IsNullOrEmpty(topic))
+            // Get all the unique topics from the articles, trimming any whitespace and filtering out empty strings
+            // List<string> allTopics = articles.SelectMany(article => article.Topic.Split(',').Select(t => t.Trim())).Where(t => !string.IsNullOrWhiteSpace(t)).Distinct().ToList();
+
+            if (!string.IsNullOrEmpty(topic) && topic != "All")
             {
                 articles = articles.Where(a => a.Topic.Contains(topic)).ToList();
             }
@@ -46,6 +48,42 @@ namespace webapi.Controllers
             }
 
             return Ok(articles); // Changed from View()
+        }
+
+        private List<Article> GetArticlesFromDatabase(bool ascending = true)
+        {
+            // Connection string for MySQL database
+            string connStr = "server=localhost;user=root;database=newsextract;port=3306;password=Qwerty123!";
+
+            // SQL query to retrieve data from database
+            string sql = "SELECT title, summary, link, published, topic FROM news";
+
+            // Create a list to hold Article objects
+            List<Article> articles = new List<Article>();
+
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Loop through each row in the result set and create an Article object from the data
+                        while (reader.Read())
+                        {
+                            Article article = new Article();
+                            article.Title = reader.GetString("title");
+                            article.Summary = reader.GetString("summary");
+                            article.Link = reader.GetString("link");
+                            article.Published = reader.GetDateTime("published");
+                            article.Topic = new List<string>(reader.GetString("topic").Split(','));
+                            articles.Add(article);
+                        }
+                    }
+                }
+            }
+
+            return articles;
         }
 
         [HttpGet("Privacy")]
