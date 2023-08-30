@@ -1,30 +1,18 @@
 import { useEffect, useState } from 'react';
+import SelectsComponent from './components/select';
+import { selectedSorting, selectedTopic } from './redux/topicSortSlice';
+import { useSelector } from 'react-redux';
 
-// In order to use react hooks like the `useCookies` hook, the must use functional components.
-// Functional components are the industry standard for the react components at the moment.
-// Class components vs Functional components: https://www.geeksforgeeks.org/differences-between-functional-components-and-class-components/
 const Articles = () => {
     const [articles, setArticles] = useState([])
-    const [searchTopic, setSearchTopic] = useState("All")
-    const [sorting, setSorting] = useState("newest")
+    const searchTopic = useSelector(selectedTopic);
+    const sorting = useSelector(selectedSorting);
     const [loading, setLoading] = useState(true)
-    const topics = ["All", "Ekonomi", "SamhalleKonflikter", "LivsstilFritt", "Idrott", "Halsa", "Politik"
 
-    ]
 
     useEffect(() => {
         populateArticleData();
     }, [searchTopic, sorting])
-
-    const handleTopicChange = (e) => {
-        e.preventDefault()
-        setSearchTopic(e.target.value)
-    }
-
-    const handleSortingChange = (e) => {
-        e.preventDefault()
-        setSorting(e.target.value)
-    }
 
     const populateArticleData = async () => {
         setLoading(true)
@@ -37,33 +25,10 @@ const Articles = () => {
 
     const renderPage = () => {
         return <>
-            {renderTopicDropdownMenu()}
-            {renderSortingDropdownMenu()}
+            <SelectsComponent />
             {renderArticlesTable()}
         </>
 
-    }
-
-    const renderTopicDropdownMenu = () => {
-        return <>
-            <label htmlFor="topic">Select a topic:</label>
-            <select id="topic" name="topic" value={searchTopic} onChange={handleTopicChange}>
-                {
-                    topics.sort().map((t, i) => <option value={t} key={i}>{t}</option>)
-                }
-            </select>
-        </>
-
-    }
-
-    const renderSortingDropdownMenu = () => {
-        return <>
-            <label htmlFor="order">Sort:</label>
-            <select id="sorting" name="sorting" value={sorting} onChange={handleSortingChange}>
-                <option value="newest" selected>Newest</option>
-                <option value="oldest" selected>Oldest</option>
-            </select>
-        </>
     }
 
     const renderArticlesTable = () => {

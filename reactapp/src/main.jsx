@@ -6,6 +6,8 @@ import Login from './pages/Login/login';
 import Articles from './pages/Articles/articles';
 import Register from './pages/Register/register';
 import PrivateRoute from './components/PrivateRoute';
+import { Provider } from 'react-redux';
+import store from './pages/Articles/redux/store';
 
 /**
  * The main component of the app. It is the one defining the `CookieProvider` and the `Router`.
@@ -31,19 +33,21 @@ import PrivateRoute from './components/PrivateRoute';
 const App = () => {
   return (
     <CookiesProvider>
-      <Router>
-        <div>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/articles"
-              element={<PrivateRoute path="/articles"> <Articles /> </PrivateRoute>}
-            />
-            <Route path="/*" element={<Login />} />
-          </Routes>
-        </div>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <div>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="/articles"
+                element={<PrivateRoute path="/articles"> <Articles /> </PrivateRoute>}
+              />
+              <Route path="/*" element={<Login />} />
+            </Routes>
+          </div>
+        </Router>
+      </Provider>
     </CookiesProvider>
   );
 };
