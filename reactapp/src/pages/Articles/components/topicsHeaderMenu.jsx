@@ -2,7 +2,7 @@ import { setTopic } from '../redux/topicSortSlice';
 import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import "./topicsHeaderMenu.css";
+import "./TopicsHeaderMenu.css";
 
 const TopicsHeaderMenu = () => {
     const dispatch = useDispatch();

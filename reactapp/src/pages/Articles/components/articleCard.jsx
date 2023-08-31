@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import './articleCard.css';
+import './ArticleCard.css';
 
 function ArticleCard({ article }) {
 

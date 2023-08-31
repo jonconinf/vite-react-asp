@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import SelectsComponent from './components/select';
+import SortingSelector from './components/SortingSelector';
 import { selectedSorting, selectedTopic, setPage } from './redux/topicSortSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import PageSelector from './components/pageSelector';
-import ArticlesTable from './components/articlesTable';
-import ArticlesTopicTitle from './components/articlesTopicTitle';
-import TopicsHeaderMenu from './components/topicsHeaderMenu';
-import Loader from './components/loader';
+import PageSelector from './components/PageSelector';
+import ArticlesTable from './components/ArticlesTable';
+import ArticlesTopicTitle from './components/ArticlesTopicTitle';
+import TopicsHeaderMenu from './components/TopicsHeaderMenu';
+import Loader from './components/Loader';
 
 const Articles = () => {
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const Articles = () => {
                 <ArticlesTopicTitle />
                 <div className='article-options'>
                     <PageSelector articles={articles} itemsPerPage={itemsPerPage} />
-                    <SelectsComponent />
+                    <SortingSelector />
                 </div>
                 <ArticlesTable articles={articles} itemsPerPage={itemsPerPage} />
             </div>

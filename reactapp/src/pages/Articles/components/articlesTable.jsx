@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import { selectedPage, selectedTopic } from '../redux/topicSortSlice';
 import { useSelector } from 'react-redux';
-import ArticleCard from './articleCard';
-import "./articlesTable.css";
+import ArticleCard from './ArticleCard';
+import "./ArticlesTable.css";
 
 const ArticlesTable = ({ articles, itemsPerPage }) => {
     const page = useSelector(selectedPage);

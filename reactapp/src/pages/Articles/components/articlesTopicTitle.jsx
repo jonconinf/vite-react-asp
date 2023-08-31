@@ -1,6 +1,6 @@
 import { selectedTopic } from '../redux/topicSortSlice';
 import { useSelector } from 'react-redux';
-import "./articlesTopicTitle.css";
+import "./ArticlesTopicTitle.css";
 
 const ArticlesTopicTitle = () => {
     const searchTopic = useSelector(selectedTopic);

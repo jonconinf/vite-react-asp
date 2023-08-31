@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setSorting, selectedSorting } from '../redux/topicSortSlice';
-import "./select.css";
+import "./SortingSelector.css";
 
-const SelectsComponent = () => {
+const SortingSelector = () => {
     const sorting = useSelector(selectedSorting);
     const dispatch = useDispatch();
 
@@ -21,4 +21,4 @@ const SelectsComponent = () => {
     );
 };
 
-export default SelectsComponent;
+export default SortingSelector;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { selectedPage, setPage } from '../redux/topicSortSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import "./pageSelector.css";
+import "./PageSelector.css";
 
 const PageSelector = ({ articles, itemsPerPage = 20 }) => {
     const page = useSelector(selectedPage);
