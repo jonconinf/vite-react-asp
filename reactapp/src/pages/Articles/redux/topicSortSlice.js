@@ -5,6 +5,7 @@ const topicSortSlice = createSlice({
     initialState: {
         searchTopic: 'All',
         sorting: 'newest',
+        page: 1
     },
     reducers: {
         setTopic: (state, action) => {
@@ -13,10 +14,15 @@ const topicSortSlice = createSlice({
         setSorting: (state, action) => {
             state.sorting = action.payload;
         },
+        setPage: (state, action) => {
+            console.log(action)
+            state.page = action.payload;
+        },
     },
 });
 
-export const { setTopic, setSorting } = topicSortSlice.actions;
+export const { setTopic, setSorting, setPage } = topicSortSlice.actions;
 export const selectedTopic = (state) => state.topicSort.searchTopic;
 export const selectedSorting = (state) => state.topicSort.sorting;
+export const selectedPage = (state) => state.topicSort.page;
 export default topicSortSlice.reducer;

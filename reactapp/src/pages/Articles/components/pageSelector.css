@@ -1,0 +1,27 @@
+.page-selector {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
+.page-selector span {
+  width: 25px;
+  height: 25px;
+  color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-selector button {
+  border-radius: 0%;
+  border: 1px solid #aaa;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  color: #222;
+}
+
+.page-selector button:hover {
+  background-color: #eee;
+}

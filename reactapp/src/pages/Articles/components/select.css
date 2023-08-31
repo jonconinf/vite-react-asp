@@ -1,0 +1,21 @@
+select {
+  /* Reset Select */
+  outline: 10px red;
+  border: 0;
+  box-shadow: none;
+  /* Personalize */
+  flex: 1;
+  padding: 0 1em;
+  border-radius: 0px;
+  border-bottom: #34495e 1px solid;
+  background-image: none;
+  cursor: pointer;
+}
+
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  overflow: hidden;
+}

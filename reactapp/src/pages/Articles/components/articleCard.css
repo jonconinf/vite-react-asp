@@ -1,0 +1,52 @@
+.article {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 16px;
+  display: flex;
+  flex-direction: column; /* Cambiar la dirección de flex a columna */
+  justify-content: space-between; /* Para alinear los elementos a izquierda y derecha */
+  align-items: flex-start; /* Para alinear los elementos verticalmente en la parte superior */
+  max-width: 100%;
+  position: relative;
+}
+
+.content {
+  flex: 1;
+}
+
+.button-content {
+  align-self: flex-end; /* Alinear al final del eje vertical (parte inferior) */
+  margin-top: auto; /* Empujar hacia abajo para que esté en la parte inferior */
+}
+
+.article-title {
+  font-size: 22px;
+  color: #333;
+}
+
+.article-summary {
+  font-size: 16px;
+  color: #666;
+}
+
+.article-published {
+  font-size: 14px;
+  color: #999;
+}
+
+.article a {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+
+.article a:hover {
+  background-color: #0056b3;
+}
