@@ -33,7 +33,7 @@ const Login = () => {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={handleLogin}>
+            <form>
                 <div>
                     <label>Username:</label>
                     <input
@@ -50,14 +50,14 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-                <button type="submit">
+                <button type="button" onClick={handleLogin}>
                     Login
                 </button>
-                <a type="submit" href="/register">
+                <a type="button" href="/register">
                     Create a new account
                 </a>
             </form>
-        </div >
+        </div>
     );
 };
 

@@ -5,9 +5,9 @@
   padding: 16px;
   margin: 16px;
   display: flex;
-  flex-direction: column; /* Cambiar la dirección de flex a columna */
-  justify-content: space-between; /* Para alinear los elementos a izquierda y derecha */
-  align-items: flex-start; /* Para alinear los elementos verticalmente en la parte superior */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
   max-width: 100%;
   position: relative;
 }
@@ -17,8 +17,8 @@
 }
 
 .button-content {
-  align-self: flex-end; /* Alinear al final del eje vertical (parte inferior) */
-  margin-top: auto; /* Empujar hacia abajo para que esté en la parte inferior */
+  align-self: flex-end;
+  margin-top: auto;
 }
 
 .article-title {
